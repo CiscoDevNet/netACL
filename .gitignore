@@ -1,2 +1,8 @@
-*
+/backend/**/tmp/
+/backend/static/
+/backend/local_settings.py
+
+*.pyc
+*.log*
+
 !.gitignore
