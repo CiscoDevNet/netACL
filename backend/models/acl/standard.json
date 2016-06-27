@@ -1,0 +1,21 @@
+{
+  "type": "object",
+  "properties": {
+    "access": {
+      "type": "array",
+      "items": [{
+        "type": "object",
+        "properties": {
+          "access-list-name": {
+            "type": "string"
+          },
+          "access-list-entries": {
+            "type": "object"
+          }
+        },
+        "required": ["access-list-name", "access-list-entries"]
+      }]
+    }
+  },
+  "required": ["access"]
+}

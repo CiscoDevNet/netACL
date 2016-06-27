@@ -1,0 +1,182 @@
+{
+  "type": "object",
+  "properties": {
+    "topology": {
+      "type": "array",
+      "minItems": 1,
+      "items": [{
+        "type": "object",
+        "properties": {
+          "topology-id": {
+            "type": "string"
+          },
+          "link": {
+            "type": "array",
+            "items": [{
+              "type": "object",
+              "properties": {
+                "link-id": {
+                  "type": "string"
+                },
+                "destination": {
+                  "type": "object",
+                  "properties": {
+                    "dest-node": {
+                      "type": "string"
+                    },
+                    "dest-tp": {
+                      "type": "string"
+                    }
+                  },
+                  "required": ["dest-node"]
+                },
+                "source": {
+                  "type": "object",
+                  "properties": {
+                    "source-node": {
+                      "type": "string"
+                    },
+                    "source-tp": {
+                      "type": "string"
+                    }
+                  },
+                  "required": ["source-node"]
+                },
+                "l3-unicast-igp-topology:igp-link-attributes": {
+                  "type": "object",
+                  "properties": {
+                    "metric": {
+                      "type": "number"
+                    },
+                    "isis-topology:isis-link-attributes": {
+                      "type": "object",
+                      "properties": {
+                        "ted": {
+                          "type": "object",
+                          "properties": {
+                            "max-link-bandwidth": {
+                              "type": "number"
+                            },
+                            "unreserved-bandwidth": {
+                              "type": "array",
+                              "items": [{
+                                "type": "object",
+                                "properties": {
+                                  "priority": {
+                                    "type": "number"
+                                  },
+                                  "bandwidth": {
+                                    "type": "number"
+                                  }
+                                }
+                              }]
+                            },
+                            "max-resv-link-bandwidth": {
+                              "type": "number"
+                            },
+                            "te-default-metric": {
+                              "type": "number"
+                            },
+                            "color": {
+                              "type": "number"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "required": ["metric"]
+                }
+              },
+              "required": ["link-id", "destination", "source", "l3-unicast-igp-topology:igp-link-attributes"]
+            }]
+          },
+          "node": {
+            "type": "array",
+            "items": [{
+              "type": "object",
+              "properties": {
+                "node-id": {
+                  "type": "string"
+                },
+                "termination-point": {
+                  "type": "array",
+                  "items": [{
+                    "type": "object",
+                    "properties": {
+                      "tp-id": {
+                        "type": "string"
+                      },
+                      "l3-unicast-igp-topology:igp-termination-point-attributes": {
+                        "type": "object"
+                      }
+                    }
+                  }]
+                },
+                "l3-unicast-igp-topology:igp-node-attributes": {
+                  "type": "object",
+                  "properties": {
+                    "router-id": {
+                      "type": "array",
+                      "items": [{
+                        "type": "string"
+                      }]
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "prefix": {
+                      "type": "array",
+                      "items": [{
+                        "type": "object",
+                        "properties": {
+                          "prefix": {
+                            "type": "string"
+                          },
+                          "metric": {
+                            "type": "number"
+                          }
+                        },
+                        "required": ["prefix"]
+                      }]
+                    },
+                    "isis-topology:isis-node-attributes": {
+                      "type": "object",
+                      "properties": {
+                        "iso": {
+                          "type": "object",
+                          "properties": {
+                            "iso-system-id": {
+                              "type": "string"
+                            }
+                          }
+                        },
+                        "ted": {
+                          "type": "object",
+                          "properties": {
+                            "te-router-id-ipv4": {
+                              "type": "string"
+                            }
+                          }
+                        },
+                        "net": {
+                          "type": "array",
+                          "items": [{
+                            "type": "string"
+                          }]
+                        }
+                      }
+                    }
+                  },
+                  "required": ["name", "prefix"]
+                }
+              }
+            }]
+          }
+        },
+        "required": ["topology-id", "node", "link"]
+      }]
+    }
+  },
+  "required": ["topology"]
+}

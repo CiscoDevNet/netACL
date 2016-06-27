@@ -1,0 +1,63 @@
+{
+    "nodes": [
+        {
+            "id": "bgpls://Ospf:1/type=node&as=65504&domain=2887196020&area=0&router=3232261124",
+            "ip": "192.168.100.4",
+            "name": "xrvr-d",
+            "interface":[{"name":"Loopback3","description":"bar","address":"192.168.200.1","netmask":"255.255.255.255"},{"name":"GigabitEthernet0/1/1/4","address":"192.168.101.3","description":"test test"}],
+            "prefix": ["192.168.114.0/23", "192.168.116.0/23"]
+        },
+        {
+            "id": "bgpls://Ospf:1/type=node&as=65504&domain=2887196020&area=0&router=3232261122",
+            "ip": "192.168.100.2",
+            "name": "xrvr-b",
+            "interface":[{"name":"GigabitEthernet0/0/1/4","description":"bar","address":"192.168.111.3","netmask":"255.255.255.255"}],
+            "prefix": ["192.168.108.0/23"]
+        },
+        {
+            "id": "bgpls://Ospf:1/type=node&as=65504&domain=2887196020&area=0&router=3232261123",
+            "ip": "192.168.100.3",
+            "name": "xrvr-c",
+            "interface":[{"name":"Loopback3","description":"bar","address":"192.168.101.1","netmask":"255.255.255.255"},{"name":"GigabitEthernet0/2/1/4","address":"192.168.201.1","description":"test test"}],
+            "prefix": ["192.168.112.0/23", "192.168.110.0/23"]
+        },
+        {
+            "id": "bgpls://Ospf:1/type=node&as=65504&domain=2887196020&area=0&router=3232261121",
+            "ip": "192.168.100.1",
+            "name": "xrvr-a",
+            "interface":[{"name":"Loopback0","description":"bar","address":"192.168.100.1","netmask":"255.255.255.255"},{"name":"Loopback1","description":"Mark","address":"192.168.106.1","netmask":"255.255.255.255"},{"name":"tunnel-te0","description":"tunnel to xrvr-b"},{"name":"MgmtEth0/0/CPU0/0","description":"lab management network","address":"172.23.29.116","netmask":"255.255.255.0"},{"name":"GigabitEthernet0/0/0/0","description":"Link to switch1","address":"192.168.101.1","netmask":"255.255.255.0"},{"name":"GigabitEthernet0/0/0/1","description":"Link to xrvr-c","address":"192.168.102.1","netmask":"255.255.255.0"},{"name":"GigabitEthernet0/0/0/2","description":"Link to xrvr-d","address":"192.168.103.1","netmask":"255.255.255.0"},{"name":"GigabitEthernet0/0/0/3","description":"second link to xrvr-b","address":"192.168.99.1","netmask":"255.255.255.0"},{"name":"GigabitEthernet0/0/1/1","description":"xxxxx"},{"name":"GigabitEthernet0/0/1/2","description":"xxx"},{"name":"GigabitEthernet0/0/1/3","description":"xxxx"},{"name":"GigabitEthernet0/0/1/4","description":"test test"}],
+            "prefix": ["192.168.106.0/23"]
+        }
+    ], "links": [
+    {
+        "source": "bgpls://Ospf:1/type=node&as=65504&domain=2887196020&area=0&router=3232261121",
+        "target": "bgpls://Ospf:1/type=node&as=65504&domain=2887196020&area=0&router=3232261122",
+        "sourceTraffic": 10,
+        "targetTraffic": 10
+    },
+    {
+        "source": "bgpls://Ospf:1/type=node&as=65504&domain=2887196020&area=0&router=3232261122",
+        "target": "bgpls://Ospf:1/type=node&as=65504&domain=2887196020&area=0&router=3232261124",
+        "sourceTraffic": 20,
+        "targetTraffic": 20
+    },
+    {
+        "source": "bgpls://Ospf:1/type=node&as=65504&domain=2887196020&area=0&router=3232261121",
+        "target": "bgpls://Ospf:1/type=node&as=65504&domain=2887196020&area=0&router=3232261123",
+        "sourceTraffic": 20,
+        "targetTraffic": 20
+    },
+    {
+        "source": "bgpls://Ospf:1/type=node&as=65504&domain=2887196020&area=0&router=3232261124",
+        "target": "bgpls://Ospf:1/type=node&as=65504&domain=2887196020&area=0&router=3232261121",
+        "targetTraffic": 20,
+        "sourceTraffic": 20
+    },
+    {
+        "source": "bgpls://Ospf:1/type=node&as=65504&domain=2887196020&area=0&router=3232261122",
+        "target": "bgpls://Ospf:1/type=node&as=65504&domain=2887196020&area=0&router=3232261123",
+        "sourceTraffic": 20,
+        "targetTraffic": 20
+    }
+]
+}

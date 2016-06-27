@@ -1,0 +1,99 @@
+{
+    "node": "xrvr-a",
+    "interface": "Loopback0",
+    "inbound": {
+        "acl-name": "testACL1",
+        "ace": [
+            {
+                "protocol": 1,
+                "sequence-number": 10,
+                "source-network": {
+                    "address": "10.0.0.0",
+                    "wild-card-bits": "0.255.255.255"
+                },
+                "source-port": {
+                    "port-mode": "range",
+                    "first-port": 1000,
+                    "second-port": 2000
+                },
+                "destination-network": {
+                    "address": "10.0.0.0",
+                    "wild-card-bits": "0.255.255.255"
+                },
+                "destination-port": {
+                    "port-mode": "equal",
+                    "first-port": 1000
+                },
+                "next-hop": {
+                    "next-hop-1": {
+                        "next-hop": "1.2.2.3"
+                    },
+                    "next-hop-2": {
+                        "next-hop": "4.3.2.1"
+                    },
+                    "next-hop-3": {
+                        "next-hop": "4.2.2.1",
+                        "vfr-name": "test"
+                    },
+                    "next-hop-type": "regular-next-hop"
+                },
+                "grant": "permit"
+            },{
+                "protocol": 6,
+                "sequence-number": 13,
+                "source-port": {
+                    "port-mode": "range",
+                    "first-port": 1000,
+                    "second-port": 2000
+                },
+                "destination-network": {
+                    "address": "10.3.0.1",
+                    "wild-card-bits": "255.255.255.0"
+                },
+                "destination-port": {
+                    "port-mode": "equal",
+                    "first-port": 1002
+                },
+                "grant": "deny"
+            },{
+                "protocol": 17,
+                "sequence-number": 14,
+                "destination-network": {
+                    "address": "10.3.0.1"
+                },
+                "destination-port": {
+                    "port-mode": "range",
+                    "first-port": 1002,  "second-port": 2001
+                },
+                "grant": "deny"
+            }
+        ]
+    },
+    "outbound": {
+        "acl-name": "testACL0",
+        "ace": [
+            {
+                "protocol": 1,
+                "sequence-number": 10,
+                "source-network": {
+                    "address": "10.0.0.0",
+                    "wild-card-bits": "0.255.255.255"
+                },
+                "source-port": {
+                    "port-mode": "range",
+                    "first-port": 1000,
+                    "second-port": 2000
+                },
+                "destination-network": {
+                    "address": "10.0.0.0",
+                    "wild-card-bits": "0.255.255.255"
+                },
+                "destination-port": {
+                    "port-mode": "equal",
+                    "first-port": 1000
+                },
+                "grant": "permit"
+            }
+        ]
+    }
+}

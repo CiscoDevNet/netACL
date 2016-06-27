@@ -1,0 +1,274 @@
+{
+    "template": [
+        {
+            "name": "infrastructure ACL",
+            "acl": {
+                "ace": [
+                    {
+                        "sequence-number": 10,
+                        "source-network": {
+                            "address": "10.0.0.0"
+                        },
+                        "grant": "deny"
+                    },
+                    {
+                        "sequence-number": 20,
+                        "source-network": {
+                            "address": "127.0.0.0",
+                            "wild-card-bits": "0.255.255.255"
+                        },
+                        "grant": "deny"
+                    },
+                    {
+                        "sequence-number": 30,
+                        "source-network": {
+                            "address": "192.0.2.0",
+                            "wild-card-bits": "0.0.0.255"
+                        },
+                        "grant": "deny"
+                    },
+                    {
+                        "sequence-number": 40,
+                        "source-network": {
+                            "address": "224.0.0.0",
+                            "wild-card-bits": "31.255.255.255"
+                        },
+                        "grant": "deny"
+                    },
+                    {
+                        "sequence-number": 50,
+                        "source-network": {
+                            "address": "10.0.0.0",
+                            "wild-card-bits": "0.255.255.255"
+                        },
+                        "grant": "deny"
+                    },
+                    {
+                        "sequence-number": 60,
+                        "source-network": {
+                            "address": "172.16.0.0",
+                            "wild-card-bits": "0.15.255.255"
+                        },
+                        "grant": "deny"
+                    },
+                    {
+                        "sequence-number": 70,
+                        "source-network": {
+                            "address": "192.168.0.0",
+                            "wild-card-bits": "0.0.255.255"
+                        },
+                        "grant": "deny"
+                    },
+                    {
+                        "protocol": 6,
+                        "sequence-number": 80,
+                        "source-network": {
+                            "address": "192.168.0.4"
+                        },
+                        "destination-network": {
+                            "address": "192.168.0.10"
+                        },
+                        "destination-port": {
+                            "port-mode": "equal",
+                            "first-port": 179
+                        },
+                        "grant": "permit"
+                    },
+                    {
+                        "protocol": 6,
+                        "sequence-number": 90,
+                        "source-network": {
+                            "address": "192.168.0.4"
+                        },
+                        "destination-network": {
+                            "address": "192.168.0.10"
+                        },
+                        "source-port": {
+                            "port-mode": "equal",
+                            "first-port": 179
+                        },
+                        "grant": "permit"
+                    },
+                    {
+                        "protocol": 6,
+                        "sequence-number": 100,
+                        "destination-network": {
+                            "address": "192.168.0.10"
+                        },
+                        "source-port": {
+                            "port-mode": "equal",
+                            "first-port": 179
+                        },
+                        "grant": "permit"
+                    },
+                    {
+                        "sequence-number": 110,
+                        "grant": "permit"
+                    }
+                ]
+            }
+        },
+        {
+            "name": "Transit ACL",
+            "acl": {
+                "ace": [
+                    {
+                        "sequence-number": 10,
+                        "source-network": {
+                            "address": "10.0.0.0"
+                        },
+                        "grant": "deny"
+                    },
+                    {
+                        "sequence-number": 20,
+                        "source-network": {
+                            "address": "127.0.0.0",
+                            "wild-card-bits": "0.255.255.255"
+                        },
+                        "grant": "deny"
+                    },
+                    {
+                        "sequence-number": 30,
+                        "source-network": {
+                            "address": "192.0.2.0",
+                            "wild-card-bits": "0.0.0.255"
+                        },
+                        "grant": "deny"
+                    },
+                    {
+                        "sequence-number": 40,
+                        "source-network": {
+                            "address": "224.0.0.0",
+                            "wild-card-bits": "31.255.255.255"
+                        },
+                        "grant": "deny"
+                    },
+                    {
+                        "sequence-number": 50,
+                        "source-network": {
+                            "address": "10.0.0.0",
+                            "wild-card-bits": "0.255.255.255"
+                        },
+                        "grant": "deny"
+                    },
+                    {
+                        "sequence-number": 60,
+                        "source-network": {
+                            "address": "172.16.0.0",
+                            "wild-card-bits": "0.15.255.255"
+                        },
+                        "grant": "deny"
+                    },
+                    {
+                        "sequence-number": 70,
+                        "source-network": {
+                            "address": "192.168.0.0",
+                            "wild-card-bits": "0.0.255.255"
+                        },
+                        "grant": "deny"
+                    },
+                    {
+                        "protocol": 6,
+                        "sequence-number": 80,
+                        "source-network": {
+                            "address": "192.168.0.4"
+                        },
+                        "destination-network": {
+                            "address": "192.168.0.10"
+                        },
+                        "destination-port": {
+                            "port-mode": "equal",
+                            "first-port": 179
+                        },
+                        "grant": "permit"
+                    },
+                    {
+                        "protocol": 6,
+                        "sequence-number": 90,
+                        "source-network": {
+                            "address": "192.168.0.4"
+                        },
+                        "destination-network": {
+                            "address": "192.168.0.10"
+                        },
+                        "source-port": {
+                            "port-mode": "equal",
+                            "first-port": 179
+                        },
+                        "grant": "permit"
+                    },
+                    {
+                        "protocol": 6,
+                        "sequence-number": 100,
+                        "destination-network": {
+                            "address": "192.168.0.10"
+                        },
+                        "source-port": {
+                            "port-mode": "equal",
+                            "first-port": 179
+                        },
+                        "grant": "permit"
+                    },
+                    {
+                        "sequence-number": 110,
+                        "protocol": 1,
+                        "grant": "deny"
+                    },
+                    {
+                        "protocol": 17,
+                        "sequence-number": 120,
+                        "source-port": {
+                            "port-mode": "equal",
+                            "first-port": 53
+                        },
+                        "destination-network": {
+                            "address": "8.8.8.8"
+                        },
+                        "destination-port": {
+                            "port-mode": "greater-than",
+                            "first-port": 1023
+                        },
+                        "grant": "permit"
+                    },
+                    {
+                        "protocol": 17,
+                        "sequence-number": 130,
+                        "source-port": {
+                            "port-mode": "equal",
+                            "first-port": 53
+                        },
+                        "destination-network": {
+                            "address": "8.8.8.8"
+                        },
+                        "destination-port": {
+                            "port-mode": "equal",
+                            "first-port": 53
+                        },
+                        "grant": "permit"
+                    },
+                    {
+                        "protocol": 17,
+                        "sequence-number": 140,
+                        "source-port": {
+                            "port-mode": "range",
+                            "first-port": 1,
+                            "second-port": 1023
+                        },
+                        "destination-network": {
+                            "address": "10.10.10.18"
+                        },
+                        "destination-port": {
+                            "port-mode": "greater-than",
+                            "first-port": 1023
+                        },
+                        "grant": "permit"
+                    },
+                    {
+                        "sequence-number": 150,
+                        "grant": "permit"
+                    }
+                ]
+            }
+        }
+    ]
+}
