@@ -21,6 +21,8 @@ except ImportError:
     static_path = os.path.join(os.path.dirname(__file__), "static")
     models_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "models")
     topo_models_path = os.path.join(models_path, "topology")
+    controller_static_path = os.path.join(static_path, "controller")
+    interfaces_path = os.path.join(controller_static_path, "interfaces")
 
     # Logging
 
