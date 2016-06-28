@@ -6,3 +6,4 @@
 *.log*
 
 !.gitignore
+.idea/

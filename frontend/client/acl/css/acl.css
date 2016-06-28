@@ -67,7 +67,7 @@ body {
   width: 350px;
   left: 20px;
   top: 20px;
-  color: #b4b5b6;
+  color: #292931;
   font-size: 11px;
   transition: all .5s;
 }
@@ -79,7 +79,7 @@ body {
 .search-container .search-panel {
   width: 350px;
   margin: 5px auto 0;
-  background: rgba(5, 5, 5, 0.6);
+  background: #ededed;
 }
 .search-container .search-panel:focus {
   outline: none;
@@ -134,16 +134,17 @@ body {
   overflow: auto;
   padding-top: 5px;
   max-height: 400px;
-  border-left: 1px solid #3f3f3f;
-  border-right: 1px solid #3f3f3f;
+  border-left: 1px solid #ededed;
+  border-right: 1px solid #ededed;
 }
 .search-container .search-result {
   margin-bottom: 45px;
 }
 .search-container .search-result-action {
   text-align: center;
-  background: rgba(41, 41, 41, 0.8);
-  border: 1px solid #3f3f3f;
+  background: #a3a3a3;
+  border: 1px solid #a3a3a3;
+  color: #ffffff;
   border-top: none;
   position: absolute;
   bottom: -35px;
@@ -193,10 +194,10 @@ body {
 }
 .search-container .search-input .form-control {
   border-radius: 0px;
-  background-color: #000;
-  border: 1px solid #3f3f3f;
+  background-color: #ededed;
+  border: 1px solid #ededed;
   height: 30px;
-  color: #b4b5b6;
+  color: #000000;
   text-indent: 15px;
   font-size: 12px;
 }
@@ -204,7 +205,7 @@ body {
   position: absolute;
   left: 5px;
   top: 8px;
-  color: #7d8787;
+  color: #131818;
 }
 .search-container .watch-list-info-container {
   cursor: pointer;
@@ -228,7 +229,7 @@ body {
   right: 0;
 }
 .search-container .watch-list .watch-result {
-  background-color: rgba(62, 62, 62, 0.8);
+  background-color: #ededed;
   transition: all .5s;
 }
 .search-container .watch-list .watch-result.is-expand.true {
@@ -243,8 +244,8 @@ body {
   padding: 7px 7px 0px;
   position: relative;
   margin-top: 10px;
-  background-color: #3e3e3e;
-  box-shadow: 2px 0px 5px #1a1919;
+  background-color: #ededed;
+  box-shadow: 2px 0px 5px #ededed;
 }
 .search-container .watch-list .watch-list-panel i.slide-icon {
   position: absolute;
@@ -252,7 +253,7 @@ body {
   top: 10px;
 }
 .search-container .watch-list.is-disable.true .watch-list-panel {
-  color: #696969;
+  color: #000000;
   padding: 7px 7px 5px;
 }
 .search-container .watch-list .watch-list-action {
@@ -260,7 +261,8 @@ body {
   right: -18px;
   top: 3.5px;
   z-index: -1;
-  background: rgba(62, 62, 62, 0.8);
+  background: #ededed;
+  color: #0a0a0a;
   height: 28px;
   line-height: 28px;
   padding-right: 4px;
@@ -301,9 +303,11 @@ body {
   background-color: #b7665f;
 }
 .acl-view-container {
-  color: #b4b5b6;
+  color: #909192;
   font-size: 11px;
 }
+
+
 .topology-container {
   position: absolute;
   left: 0;
@@ -375,7 +379,7 @@ body {
   position: absolute;
   top: 0;
   z-index: 99;
-  background-color: #333333;
+  background-color: #ededed;
 }
 .acl-template .new-from-blank {
   font-size: 20px;
@@ -434,7 +438,7 @@ body {
 }
 .acl-template .template-list .template-item:hover {
   background-color: #edc729;
-  color: #000;
+  color: #818181;
 }
 .main-right {
   height: calc(100% -  55px  - 7px);
@@ -478,10 +482,12 @@ body {
 }
 .acl-info {
   white-space: nowrap;
+  background: #878787;
 }
 .acl-info .icon-nav {
   color: #2ac6ea;
   display: inline-block;
+  background: #878787;
 }
 .acl-info .nav-tab {
   line-height: 28px;
@@ -502,8 +508,8 @@ body {
   margin-right: 5px;
 }
 .acl-list-view {
-  background-color: #333333;
-  border: 1px solid #4b4b4b;
+  background-color: #ededed;
+  border: 1px solid #d5d5d5;
   height: calc(100% - 33px);
   position: relative;
   overflow: hidden;
@@ -645,7 +651,7 @@ body {
   top: 0;
   max-height: 0px;
   overflow: hidden;
-  background-color: #333333;
+  background-color: #bcbcbc;
   transition: all .5s;
   border-left: 2px solid;
   white-space: nowrap;
@@ -682,7 +688,7 @@ body {
   height: 25px;
   display: inline-block;
   width: 35px;
-  background: #000000;
+  background: #ffffff;
   border: none;
   outline: none;
   border-radius: 0px;
@@ -711,7 +717,7 @@ body {
   margin-left: 5px;
   display: inline-block;
   height: 25px;
-  background-color: #000;
+  background-color: #ffffff;
   color: #ddd;
   border: none;
   border-radius: 0px;
@@ -832,7 +838,7 @@ body {
 .nav-tab {
   font-size: 18px;
   position: relative;
-  background-color: #050505;
+  background: #878787;
   -moz-user-select: none;
   -webkit-user-select: none;
   -ms-user-select: none;
@@ -914,7 +920,7 @@ body {
 .device-interface-info .device-info,
 .device-interface-info .interface-info {
   width: 197.5px;
-  background-color: #333333;
+  background-color: #ededed;
   display: inline-block;
   height: 100%;
   float: left;
