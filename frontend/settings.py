@@ -1,4 +1,5 @@
 import logging
+import os
 
 import time
 
@@ -9,6 +10,7 @@ log_level = 'INFO'
 
 debug_modules = ['node_structure']
 
+base_package_name = os.path.dirname(__file__)
 
 class DebugFilter(logging.Filter):
     ''' limits debug output to selected modules '''

@@ -17,7 +17,6 @@ class DataHandler(tornado.web.RequestHandler):
 
     def initialize(self, backend):
         self.backend = urlparse.urlunparse((backend["protocol"], backend["host"] + ":" + str(backend["port"]), '', '', '', ''))
-        print(self.backend)
 
     @gen.coroutine
     def get(self, app):

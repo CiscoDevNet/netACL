@@ -1,6 +1,6 @@
 import importlib
 
-from backend.settings import INSTALLED_APPS, logger
+from backend.settings import INSTALLED_APPS, logger, base_package_name
 
 
 def format_app_name(app_name):
@@ -11,9 +11,9 @@ def connect_apps(main_app):
     apps = {}
     for app_name in list(map(format_app_name, INSTALLED_APPS)):
         try:
-            importlib.import_module('.'.join(['apps', app_name]))  # init app
-            topology_module = importlib.import_module('.'.join(['apps', app_name, 'topology_parser']))
-            handler_module = importlib.import_module('.'.join(['apps', app_name, 'handler']))
+            importlib.import_module('.'.join([base_package_name, 'apps', app_name]))  # init app
+            topology_module = importlib.import_module('.'.join([base_package_name, 'apps', app_name, 'topology_parser']))
+            handler_module = importlib.import_module('.'.join([base_package_name, 'apps', app_name, 'handler']))
         except ImportError as e:
             error = "Failed connecting app {}. Reason: {}".format(app_name, e.message)
             logger.error(error)

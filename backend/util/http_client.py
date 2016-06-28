@@ -20,7 +20,7 @@ class HttpClient(object):
 
     def __init__(self, dry_run=False, debug=False, fail_silently=False):
         self.dry_run = dry_run or http_client_settings.get("dry_run")
-        self.debug = debug or http_client_settings.get("debug")
+        self.debug = debug and http_client_settings.get("debug")
         self.fail_silently = fail_silently
 
     @staticmethod

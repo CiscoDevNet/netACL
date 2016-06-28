@@ -92,6 +92,8 @@ except ImportError:
 
 # Tornado
 
+base_package_name = os.path.dirname(__file__)
+
 settings = {
     "debug": DEBUG,
     "static_path": static_path,

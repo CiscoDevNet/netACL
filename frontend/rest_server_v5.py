@@ -16,7 +16,7 @@
     """
 import ConfigParser
 
-from frontend.settings import LOGGING
+from frontend.settings import LOGGING, base_package_name
 
 __author__ = 'niklas'
 # Import standard Python library modules.
@@ -46,7 +46,7 @@ class Commands(object):
         """Create http server, register callbacks and start immediatelly."""
 
         application = tornado.web.Application([
-            (r'/pathman/client/(.*)', tornado.web.StaticFileHandler, {"path": "client"}),
+            (r'/pathman/client/(.*)', tornado.web.StaticFileHandler, {"path": os.path.join(base_package_name, "client")}),
             (r'/pathman/topology(?:/(.*)|$)', DataHandler, dict(backend=backend)),
             (r'/APP/webs/(\w+)/rest/(.*)', WebsRestHandler, dict(backend=backend))
         ], dict(debug=debug))
@@ -64,7 +64,6 @@ class Commands(object):
 
 
 if __name__ == "__main__":
-
     config = ConfigParser.ConfigParser()
     config.read(os.path.join(os.path.dirname(os.path.realpath(__file__)), 'init.conf'))
 
