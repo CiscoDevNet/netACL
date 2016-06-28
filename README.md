@@ -1,9 +1,9 @@
 # netACL
 ## Getting started
 
-### Run pathman:
-1. Run ```pip install -r pathman/requirements.txt``` in your python environment
-2. Run ```python -m pathman.rest_server_v5```
+### Run frontend:
+1. Run ```pip install -r frontend/requirements.txt``` in your python environment
+2. Run ```python -m frontend.rest_server_v5```
 
 ### Run backend:
 1. Run ```pip install -r backend/requirements.txt``` in your python environment
