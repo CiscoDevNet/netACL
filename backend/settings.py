@@ -92,7 +92,7 @@ except ImportError:
 
 # Tornado
 
-base_package_name = os.path.relpath(".", "..")
+base_package_name = utils.get_directory_name(__file__)
 
 settings = {
     "debug": DEBUG,

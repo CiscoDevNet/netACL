@@ -159,3 +159,7 @@ def dup_link(links):
                 temp["targetTraffic"] = links[j]['metric']
                 link_list.append(temp)
     return link_list
+
+
+def get_directory_name(f):
+    return os.path.split(os.path.dirname(os.path.realpath(f)))[1]
