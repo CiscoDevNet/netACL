@@ -26,7 +26,7 @@ except ImportError:
 
     # Logging
 
-    log_file = '/var/log/netACL/app.log'
+    log_file = '/tmp/netACL/app.log'
     utils.mkfile(log_file)
 
     logging.config.dictConfig(
