@@ -79,7 +79,7 @@ body {
 .search-container .search-panel {
   width: 350px;
   margin: 5px auto 0;
-  background: #ededed;
+  background: rgba(163, 163, 163);
 }
 .search-container .search-panel:focus {
   outline: none;
@@ -142,7 +142,7 @@ body {
 }
 .search-container .search-result-action {
   text-align: center;
-  background: #a3a3a3;
+  background: rgba(163, 163, 163);
   border: 1px solid #a3a3a3;
   color: #ffffff;
   border-top: none;
@@ -623,7 +623,7 @@ body {
 }
 .ace-list li.ace-item.is-edit-false:hover,
 .ace-list li.ace-item.is-pure-true {
-  background-color: #000;
+  background-color: #cacaca;
 }
 .ace-list li.ace-item.is-edit-false:hover .edit-icons,
 .ace-list li.ace-item.is-pure-true .edit-icons {
