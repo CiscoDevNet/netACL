@@ -18,9 +18,8 @@ class HttpClient(object):
     PUT = 'PUT'
     DELETE = 'DELETE'
 
-    def __init__(self, dry_run=False, debug=False, fail_silently=False):
+    def __init__(self, dry_run=False, fail_silently=False):
         self.dry_run = dry_run or http_client_settings.get("dry_run")
-        self.debug = debug and http_client_settings.get("debug")
         self.fail_silently = fail_silently
 
     @staticmethod
@@ -56,7 +55,7 @@ class HttpClient(object):
             if data_type == "json":
                 request.body = json.dumps(data)
 
-        if is_CUD and self.debug:
+        if is_CUD:
             if self.dry_run:
                 logger.info("\nDRY RUN")
             logger.debug("\n\nSending {} request.\nUrl: {}\nBody: {}\n".format(method, full_url, request.body))
@@ -72,8 +71,7 @@ class HttpClient(object):
                 if not self.fail_silently and not self.is_ok(response.code):
                     raise HttpClientException(response)
 
-                if self.debug:
-                    logger.debug("\n\nResponse ({}).\nUrl: {}\nBody: {}\n".format(response.code, full_url, response.body))
+                logger.debug("\n\nResponse ({}).\nUrl: {}\nBody: {}\n".format(response.code, full_url, response.body))
 
                 return response
             except HTTPError as e:

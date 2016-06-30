@@ -40,7 +40,7 @@ except ImportError:
             },
             'handlers': {
                 'file': {
-                    'level': 'WARN',
+                    'level': 'DEBUG' if DEBUG is True else 'WARN',
                     'class': 'logging.handlers.RotatingFileHandler',
                     'formatter': 'default',
                     'filename': log_file
@@ -48,7 +48,7 @@ except ImportError:
             },
             'loggers': {
                 'netACL': {
-                    'level': 'WARN',
+                    'level': 'DEBUG' if DEBUG is True else 'WARN',
                     'handlers': ['file'],
                     'qualname': 'netACL'
                 }
@@ -83,8 +83,7 @@ except ImportError:
             "connect": 7,
             "request": 10
         },
-        "dry_run": False,
-        "debug": DEBUG
+        "dry_run": False
     }
 
     logger.warning("No local settings found, using default settings")
