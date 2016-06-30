@@ -28,8 +28,7 @@ class Handler(BaseHandler):
             try:
                 response = ControllerOperations().get_acls(node, interface)
                 if response:
-                    if DEBUG:
-                        logger.debug(response)
+                    logger.debug(response)
 
                     self.set_header("Content-Type", "application/json")
                     self.write(json.dumps(response))
@@ -51,8 +50,7 @@ class Handler(BaseHandler):
             self.set_status(status)
 
     def post(self, *args, **kwargs):
-        if DEBUG:
-            logger.debug('Apply acl payload: {}'.format(self.request.body))
+        logger.debug('Apply acl payload: {}'.format(self.request.body))
         result, msg = ControllerOperations().apply_acls(self.request.body)
         response = {
             'ret_code': result,
@@ -60,8 +58,7 @@ class Handler(BaseHandler):
         }
 
         if result is True:
-            if DEBUG:
-                logger.debug('Result: {}.\n Message: {}'.format('ok', msg))
+            logger.debug('Result: {}.\n Message: {}'.format('ok', msg))
 
             self.set_header('Content-Type', 'application/json')
             self.write(response)
@@ -69,8 +66,7 @@ class Handler(BaseHandler):
             self.set_status(INTERNAL_SERVER_ERROR, json.dumps(msg))
 
     def delete(self, *args, **kwargs):
-        if DEBUG:
-            logger.debug('Delete acl payload: {}'.format(self.request.body))
+        logger.debug('Delete acl payload: {}'.format(self.request.body))
         result, msg = ControllerOperations().delete_acl(self.request.body)
         response = {
             'ret_code': result,

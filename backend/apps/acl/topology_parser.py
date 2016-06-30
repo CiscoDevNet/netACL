@@ -422,7 +422,7 @@ class Topology(AbstractTopology):
             self.set_topology_parser(controller_topology)
         except ValidationError as e:
             logger.exception("Topology validation error: " + e.message)
-            return
+            return False, controller_topology
 
         try:
             self.upload_topology(controller_topology)
@@ -431,10 +431,10 @@ class Topology(AbstractTopology):
             self.links = remove_dup_links(self.parse_links())
 
         except Exception as ex:
-            logger.exception("ACL get node error: %s" % ex.message)
-            return
+            logger.exception("ACL parse topology error: %s" % ex.message)
+            return False, controller_topology
 
-        return json.dumps(self, cls=self.get_topology_encoder())
+        return True, json.dumps(self, cls=self.get_topology_encoder())
 
     def upload_topology(self, topology):
         return self.get_topology_parser().upload_topology(topology)

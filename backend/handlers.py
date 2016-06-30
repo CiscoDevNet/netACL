@@ -57,7 +57,7 @@ class TopologyHandler(BaseHandler):
             topology_parser = app_connector.get_topology_parser(self.application, app)()
 
             try:
-                parsed_topology = TopologyHandler.get_topology(topology_parser)
+                res, parsed_topology = TopologyHandler.get_topology(topology_parser)
             except Exception as e:
                 logger.error("Topology fetch failed. Error: {}".format(e.message))
                 if DEBUG:
@@ -66,11 +66,16 @@ class TopologyHandler(BaseHandler):
                     self.set_status(INTERNAL_SERVER_ERROR)
                 self.finish()
             else:
-                if DEBUG:
+                if res is True:
                     logger.debug("Parsed topology: {}".format(parsed_topology))
 
-                self.set_header("Content-Type", "application/json")
-                self.write(parsed_topology)
+                    if parsed_topology:
+                        self.set_header("Content-Type", "application/json")
+                        self.write(parsed_topology)
+                    else:
+                        logger.error("Failed to parse topology")
+                else:
+                    logger.error("Failed to parse topology. Received controller topology: {}".format(parsed_topology))
 
 
 class WebsHandler(BaseHandler):
