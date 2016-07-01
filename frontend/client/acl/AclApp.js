@@ -45,7 +45,7 @@
     var wsProtocol = 'ws';
     var httpProtocol = 'http';
 
-    var backendPath = pathJoin(null, ['/pathman/topology', appName]);
+    var backendPath = pathJoin(null, ['/cisco-ctao/topology', appName]);
     var websPath = pathJoin(null, [host, '/APP/webs', appName]);
     var topoUrl = location.protocol + '//' + pathJoin(null, [host, backendPath]);
     //host = "10.75.161.96";

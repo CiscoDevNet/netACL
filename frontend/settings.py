@@ -3,7 +3,7 @@ import os
 
 import time
 
-log_file = 'frontend.log'
+log_file = '/tmp/netACL/frontend.log'
 log_size = 100000
 log_count = 3
 log_level = 'INFO'

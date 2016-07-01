@@ -46,8 +46,8 @@ class Commands(object):
         """Create http server, register callbacks and start immediatelly."""
 
         application = tornado.web.Application([
-            (r'/pathman/client/(.*)', tornado.web.StaticFileHandler, {"path": os.path.join(base_package_dir, "client")}),
-            (r'/pathman/topology(?:/(.*)|$)', DataHandler, dict(backend=backend)),
+            (r'/cisco-ctao/apps/(.*)', tornado.web.StaticFileHandler, {"path": os.path.join(base_package_dir, "client")}),
+            (r'/cisco-ctao/topology(?:/(.*)|$)', DataHandler, dict(backend=backend)),
             (r'/APP/webs/(\w+)/rest/(.*)', WebsRestHandler, dict(backend=backend))
         ], dict(debug=debug))
         """
