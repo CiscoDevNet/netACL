@@ -11,7 +11,7 @@
 3. Make sure current user has enough permissions to create system path specified in "log_file" variable
 4. Run ```python -m backend.app```
 
-### How to connect apps to backend:
+## Adding apps
 1. Create a python package with name equal to app name
 2. Create following python modules in app package with specific contents (list is to be altered):
   1. ```topology_parser.py```:
@@ -20,3 +20,4 @@
     1. Class ```Handler``` that subclasses ```tornado.web.RequestHandler``` class. It should provide HTTP verb methods (at least *get*, *post*, *put* and *delete*) and behave like a tornado handler
 3. Add app name to ```INSTALLED_APPS``` list in ```backend/local_settings.py``` file
 4. Run backend and check logs to see if app connection has been successful
+
