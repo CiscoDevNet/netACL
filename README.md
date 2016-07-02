@@ -1,4 +1,5 @@
 # netACL
+
 ## Getting started
 
 ### Run frontend:
@@ -7,9 +8,20 @@
 
 ### Run backend:
 1. Run ```pip install -r backend/requirements.txt``` in your python environment
-2. Create "backend/local_settings.py" with corresponding to "backend/settings.py" variables
+2. Create "backend/local_settings.py" with corresponding to "backend/settings.py" variables.
+  1. ```controller_address``` and ```controller_auth``` variables should be set to establish connection to a working ODL instance with a running network topology. *(TBD - supported controller versions)* 
 3. Make sure current user has enough permissions to create system path specified in "log_file" variable
 4. Run ```python -m backend.app```
+
+## ACL app
+After deploying [frontend](#run-frontend) and [backend](#run-backend):
+
+1. Open your browser. *(TBD - supported browsers)*
+2. Go to ACL app index page, which can be located at: ```%YOUR_HOST%/cisco-ctao/apps/acl/index.html```, where ```%YOUR_HOST``` should be substituted by host name of where **frontend** is deployed. You should see the main app screen:
+![Main screen](https://github.com/CiscoDevNet/netACL/blob/master/images/main_view.png)
+3. Enter an existing node name in the search field in the upper left corner of the page. You'll see a list of existing network interfaces on this node.
+![Interface list screen](https://github.com/CiscoDevNet/netACL/blob/master/images/node_selected.png)
+4. *TBD*
 
 ## Adding apps
 1. Create a python package with name equal to app name
