@@ -13,7 +13,7 @@
 3. Make sure current user has enough permissions to create system path specified in "log_file" variable
 4. Run ```python -m backend.app```
 
-## ACL app
+## Running ACL app
 After deploying [frontend](#run-frontend) and [backend](#run-backend):
 
 1. Open your browser. *(TBD - supported browsers)*
@@ -21,7 +21,13 @@ After deploying [frontend](#run-frontend) and [backend](#run-backend):
 ![Main screen](https://github.com/CiscoDevNet/netACL/blob/master/images/main_view.png)
 3. Enter an existing node name in the search field in the upper left corner of the page. You'll see a list of existing network interfaces on this node.
 ![Interface list screen](https://github.com/CiscoDevNet/netACL/blob/master/images/node_selected.png)
-4. *TBD*
+4. Select an interface and click *add to selection list*, then click *Add ACL*.
+![ACL choice screen](https://github.com/CiscoDevNet/netACL/blob/master/images/acl_choice.png)
+5. Choose *New from blank ACL* or *New from template*. Here is an example of a preset template:
+![Infrastructure template](https://github.com/CiscoDevNet/netACL/blob/master/images/infrastructure_template.png)
+6. Click *Deploy Inbound* or *Deploy Outbound*, enter a name and hit *Confirm*. Click *Back to full map view*, then the chevron near selected ACLs and subsequently *View ACL*. You'll see the ACL applied to your selected interface.
+![Interface ACLs](https://github.com/CiscoDevNet/netACL/blob/master/images/interface_acls.png)
+7. The ACL is now applied to the interface.
 
 ## Adding apps
 1. Create a python package with name equal to app name
