@@ -22,3 +22,6 @@ class HttpClientException(Exception):
             self.status_code = INTERNAL_SERVER_ERROR
             self.message = ""
             self.url = ""
+
+    def __repr__(self):
+        return repr(self.message)

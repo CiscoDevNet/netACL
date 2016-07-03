@@ -75,7 +75,7 @@ class HttpClient(object):
 
                 return response
             except HTTPError as e:
-                logger.error(e)
+                logger.error(e.message)
                 if not self.fail_silently:
                     raise HttpClientException(e)
                 return None

@@ -44,8 +44,9 @@ class ControllerOperations(object):
             try:
                 self.get_acl_parser().apply_acls()
             except Exception as e:
-                logger.exception(e.message)
-                return False, json.loads(e.response.body) if hasattr(e, 'response') else e.message
+                error = e.response.body if hasattr(e, 'response') else e.message
+                logger.exception(error)
+                return False, error
 
             return True, 'ok'
         except Exception as e:
