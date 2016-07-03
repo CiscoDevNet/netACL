@@ -12,14 +12,6 @@ def initialize(self, backend):
     self.backend = urlparse.urlunparse((backend["protocol"], backend["host"] + ":" + str(backend["port"]), '', '', '', ''))
 
 
-def parse_args(request_args):
-    args = ""
-    for argument, values in request_args:
-        for value in values:
-            args += argument + "=" + value + "&"
-    return args.strip("&")
-
-
 class WebsRestHandler(RequestHandler):
 
     def initialize(self, backend):

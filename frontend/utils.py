@@ -1,3 +1,6 @@
+import os
+
+
 def url_join(*parts):
     if len(parts) > 0:
         return ('/' if parts[0].startswith('/') else '') \
@@ -12,3 +15,18 @@ def query_join(query_dict):
         if len(query_dict) > 0 \
         else ''
 
+
+def mkdir(*dirs):
+    for d in dirs:
+        if not os.path.exists(d):
+            os.makedirs(d)
+
+
+def touch(fname, times=None):
+    with open(fname, 'a'):
+        os.utime(fname, times)
+
+
+def mkfile(path):
+    mkdir(os.path.dirname(path))
+    touch(path)

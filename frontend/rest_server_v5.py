@@ -16,7 +16,8 @@
     """
 import ConfigParser
 
-from frontend.settings import LOGGING, base_package_dir
+from frontend.settings import LOGGING, base_package_dir, log_file
+from frontend.utils import mkfile
 
 __author__ = 'niklas'
 # Import standard Python library modules.
@@ -78,6 +79,7 @@ if __name__ == "__main__":
         }
     }
 
+    mkfile(log_file)
     logging.config.dictConfig(LOGGING)
     logging.info('This is initializing the log')
     Commands(**kwargs)
