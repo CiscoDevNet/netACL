@@ -1,4 +1,13 @@
-# netACL
+# OpenDaylight netACL App
+
+OpenDaylight (ODL) is an open-source application development and delivery platform.
+This ACL app uses NETCONF to configure access lists on your routers.
+
+### Contact Email
+
+<netacl-app@external.cisco.com>
+(Will be live July 4th 2016)
+
 
 ## Getting started
 
@@ -17,7 +26,7 @@
 After deploying [frontend](#run-frontend) and [backend](#run-backend):
 
 1. Open your browser. *(TBD - supported browsers)*
-2. Go to ACL app index page, which can be located at: ```%YOUR_HOST%/cisco-ctao/apps/acl/index.html```, where ```%YOUR_HOST``` should be substituted by host name of where **frontend** is deployed. You should see the main app screen:
+2. Go to ACL app index page, which can be located at: ```%YOUR_HOST%:8020/cisco-ctao/apps/acl/index.html```, where ```%YOUR_HOST``` should be substituted by host name of where **frontend** is deployed. You should see the main app screen:
 ![Main screen](https://github.com/CiscoDevNet/netACL/blob/master/images/main_view.png)
 3. Enter an existing node name in the search field in the upper left corner of the page. You'll see a list of existing network interfaces on this node.
 ![Interface list screen](https://github.com/CiscoDevNet/netACL/blob/master/images/node_selected.png)
