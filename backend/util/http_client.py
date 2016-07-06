@@ -22,6 +22,8 @@ class HttpClient(object):
         self.dry_run = dry_run or http_client_settings.get("dry_run")
         self.fail_silently = fail_silently
 
+        logger.debug("HTTP Client initialized with config:\ndry_run={}\nfail_silently={}".format(self.dry_run, self.fail_silently))
+
     @staticmethod
     def set_content_type(content_type):
         if content_type == "json":

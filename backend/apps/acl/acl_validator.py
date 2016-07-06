@@ -13,8 +13,8 @@ class AclValidator(object):
         self._errors = {}
 
     def validate_entry(self, entry):
-        if "sequence-number" not in entry or not str(entry["sequence-number"]).isdigit():
-            self._errors.update({"sequence-number": "Sequence number is missing or not a number"})
+        # if "sequence-number" not in entry or not str(entry["sequence-number"]).isdigit():
+        #     self._errors.update({"sequence-number": "Sequence number is missing or not a number"})
 
         if "grant" not in entry or entry["grant"] not in self.ALLOWED_VALUES.get("grant", []):
             self._errors.update({"grant": "Grant is missing or invalid"})

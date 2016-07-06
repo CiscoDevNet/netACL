@@ -1,7 +1,9 @@
 import urllib
 
 from acl_validator import AclValidator
+from settings import logger
 from backend.util.errors import ValidationError
+from backend.util.exceptions import HttpClientException
 from utils import validate_acl_name
 from urls import interfaces_url, acl_url
 from backend.util.http_client import HttpClient
@@ -33,8 +35,11 @@ class AclParserStandard(object):
     PARSE = 0
     UNPARSE = 1
 
-    INTERFACE_URL = url_join(interfaces_url,
-                             '/interface-configuration/act/{}/Cisco-IOS-XR-ip-pfilter-cfg:ipv4-packet-filter/{}')
+    POST_INTERFACE_URL = url_join(interfaces_url,
+                             '/interface-configuration/act/{}')
+    PUT_INTERFACE_URL = url_join(POST_INTERFACE_URL,
+                             '/Cisco-IOS-XR-ip-pfilter-cfg:ipv4-packet-filter/{}')
+    DELETE_INTERFACE_URL = PUT_INTERFACE_URL
     PUT_ACL_URL = url_join(acl_url, '/accesses/access/{}')
 
     MAPPINGS = {
@@ -91,16 +96,29 @@ class AclParserStandard(object):
         return self.payload
 
     @staticmethod
-    def _fill_interface_template(bind, acl_name):
-        return {
+    def _fill_interface_template(bind, acl_name, method=HttpClient.PUT):
+        payload = {
             bind: {
                 "name": acl_name
             }
         }
+        return payload if method == HttpClient.PUT else {"Cisco-IOS-XR-ip-pfilter-cfg:ipv4-packet-filter": payload}
+
+    @staticmethod
+    def _sort_aces(aces):
+        if not all(unicode(ace.get("sequence-number")).isdigit() for ace in aces) \
+                or len(set(map(lambda ace: ace.get("sequence-number"), aces))) < len(aces):
+            for index, ace in enumerate(aces):
+                ace["sequence-number"] = 10 * (index + 1)
+            return aces
+        else:
+            return sorted(aces, key=lambda ace: int(ace.get("sequence-number")))
 
     @staticmethod
     def _get_aces(acl, parse_mode):
-        return acl.get('ace') if parse_mode == AclParserStandard.PARSE else acl.get("access-list-entries").get("access-list-entry")
+        return AclParserStandard._sort_aces(acl.get('ace')
+                                            if parse_mode == AclParserStandard.PARSE
+                                            else acl.get("access-list-entries").get("access-list-entry"))
 
     @staticmethod
     def _build_out_aces(aces, parse_mode):
@@ -140,7 +158,8 @@ class AclParserStandard(object):
 
         in_aces = AclParserStandard._get_aces(acl, parse_mode)
         out_aces = []
-        for ace_entry_in in in_aces:
+
+        for index, ace_entry_in in enumerate(in_aces):
             validator.validate_entry(ace_entry_in)
 
             ace_entry_out = {
@@ -219,12 +238,18 @@ class AclParserStandard(object):
             http_client.put(self.PUT_ACL_URL.format(node.get('name'), acl_name), access_list)
 
             for interface_name in node.get('interface', []):
-                interface_payload = self._fill_interface_template(self.bind, acl_name)
-                interface_url = self.INTERFACE_URL.format(node.get('name'),
-                                                          urllib.quote(interface_name, ''),
-                                                          self.bind)
-
-                http_client.put(interface_url, interface_payload)
+                try:
+                    interface_payload = self._fill_interface_template(self.bind, acl_name, HttpClient.POST)
+                    interface_url = self.POST_INTERFACE_URL.format(node.get('name'),
+                                                                   urllib.quote(interface_name, ''))
+                    http_client.post(interface_url, interface_payload)
+                except HttpClientException as e:
+                    logger.debug("POST acl failed, trying PUT. Error: {}".format(e.message))
+                    interface_payload = self._fill_interface_template(self.bind, acl_name, HttpClient.PUT)
+                    interface_url = self.PUT_INTERFACE_URL.format(node.get('name'),
+                                                                  urllib.quote(interface_name, ''),
+                                                                  self.bind)
+                    http_client.put(interface_url, interface_payload)
 
     @upload_required
     def delete_acl(self):
@@ -235,9 +260,9 @@ class AclParserStandard(object):
 
         for node in self.nodes:
             for interface in node.get("interface", []):
-                http_client.delete(self.INTERFACE_URL.format(node.get('name'),
-                                                             urllib.quote(interface, ''),
-                                                             self.bind))
+                http_client.delete(self.DELETE_INTERFACE_URL.format(node.get('name'),
+                                                                     urllib.quote(interface, ''),
+                                                                     self.bind))
             http_client.delete(self.PUT_ACL_URL.format(node.get('name'), acl_name))
 
     def unparse_acl(self, acl):
