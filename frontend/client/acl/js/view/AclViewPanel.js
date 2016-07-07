@@ -764,28 +764,30 @@
                                                 'class': 'acl-list-action'
                                             },
                                             content: [
-//                                                {
-//                                                    tag: 'button',
-//                                                    props: {
-//                                                        'class': 'btn btn-sm btn-success'
-//                                                    },
-//                                                    content: [
-//                                                        {
-//                                                            tag: 'i',
-//                                                            props: {
-//                                                                'class': "fa fa-bug"
-//                                                            }
-//                                                        },
-//                                                        {
-//                                                            tag: 'span',
-//                                                            content: "Validate"
-//                                                        }
-//                                                    ]
-//                                                },
                                                 {
                                                     tag: 'button',
                                                     props: {
-                                                        'class': 'btn btn-sm btn-info for-view'
+                                                        'class': 'btn btn-sm btn-success',
+                                                        'style': 'display: none'
+                                                    },
+                                                    content: [
+                                                        {
+                                                            tag: 'i',
+                                                            props: {
+                                                                'class': "fa fa-bug"
+                                                            }
+                                                        },
+                                                        {
+                                                            tag: 'span',
+                                                            content: "Validate"
+                                                        }
+                                                    ]
+                                                },
+                                                {
+                                                    tag: 'button',
+                                                    props: {
+                                                        'class': 'btn btn-sm btn-info for-view',
+                                                        'style': 'display: none'
                                                     },
                                                     content: [
                                                         {
