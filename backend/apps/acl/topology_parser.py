@@ -7,6 +7,7 @@ from tornado.httpclient import HTTPError
 
 from backend.apps.acl.utils import is_acl_name_hidden
 from backend.util.app_utils import fetch_and_persist
+from backend.util.exceptions import HttpClientException
 from urls import interfaces_url, acl_url
 from settings import logger, acl_path
 from backend.settings import interfaces_path
@@ -311,17 +312,13 @@ class AclTopologyParserNew(AbstractAclTopologyParser):
 
             node[self.PREFIX] = prefix_array
             node[self.ID] = controller_node[self.NODE_ID]
-            node_list.append(node)
 
-        for node in node_list:
-            node_dict = html_style(node[self.ID])
-            if node[self.NAME] == node_dict[self.ROUTER] and node[self.LOOPBACK] == "0.0.0.0":
-                for owner in node_list:
-                    owner_dict = html_style(owner[self.ID])
-                    if node[self.NAME][:len(owner_dict[self.ROUTER])] == owner_dict[self.ROUTER] and node[self.NAME] != owner[self.NAME]:
-                        node[self.NAME] = owner[self.NAME] + node_dict[self.ROUTER][len(owner_dict[self.ROUTER]):]
-
-            node[self.INTERFACE] = self.parse_interfaces(self.fetch_interfaces(node[self.NAME]))
+            try:
+                node[self.INTERFACE] = self.parse_interfaces(self.fetch_interfaces(node[self.NAME]))
+                node_list.append(node)
+            except HttpClientException as e:
+                logger.error("Fetch interfaces for node '{}' failed.".format(node[self.NAME]))
+                logger.exception(e.message)
 
         return node_list
 
@@ -370,7 +367,7 @@ class AclTopologyParserNew(AbstractAclTopologyParser):
 
             node_interfaces.append(node_interface)
 
-        return node_interfaces
+        return sorted(node_interfaces, key=lambda k: k['name'])
 
     def get_acls(self, node_name, interface_name, acl_parser):
         controller_acls = self.fetch_acl(node_name, default={})
