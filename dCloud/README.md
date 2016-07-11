@@ -155,9 +155,9 @@ drwxr-xr-x   7 staff    238 Jul  2 15:48 images
  ```
 
 7. Open your Chrome Browser - URL to launch netACL app: [http:/198.18.1.80:8020/cisco-ctao/apps/acl/index.html](http://198.18.1.80:8020/cisco-ctao/apps/acl/index.html). This assumes that your app is running in the demos UserVM.
-8. Please also follow the step [Adding Dummy ACLs](#adding_dummies) to avoid this [Caveat](#accesslist_downloads)
+8. Please also follow the step [Adding Dummy ACLs](#adding-dummy-acls) to avoid this [Caveat](#accesslist-downloads)
 
-<span id="adding_dummies" class="anchor">
+
 ## Adding Dummy ACLs
 If you are using this app with our dCloud demo, you will need to go through these steps. See this [Caveat](#accesslist_downloads) for why.
 
