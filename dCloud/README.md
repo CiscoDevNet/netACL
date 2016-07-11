@@ -224,4 +224,4 @@ IOS XRv version 5.3.x and 6.0.0 will not accept an access-list to be downloaded 
 
 2. The netACL app will disregard and acl named 'dont_touch' and they will **not** be displayed by the app.
 
-3. For the dCloud demo, you can add this acl to **all** routers in the topology by following the step above called [Adding Dummy ACLs](#adding_dummies)
+3. For the dCloud demo, you can add this acl to **all** routers in the topology by following the step above called [Adding Dummy ACLs](#adding-dummy-acls)
