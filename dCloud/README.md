@@ -48,7 +48,7 @@ The netACL app has been tested with Lithium SR3 and Beryllium SR1 and SR2
 For other setups, you may need to change ip/port/auth details.
 This is done int the **backend/settings.py** file.
 
-``` json
+``` python
  66     # Controller
  67
  68     controller_address = {
@@ -170,19 +170,19 @@ For some of our demos, we have enabled public IP access. In the picture below, y
 
 You can use them directly from your Pathman_SR app, by changing the **backend/settings.py**  file as described below.
 
-``` json
- 66     # Controller
- 67
- 68     controller_address = {
- 69         'scheme': 'http',
- 70         'host': '64.100.10.119',  # Public IP for your session
- 71         'port': 6644              # Must be 6644 for public ip access
- 72     }
- 73
- 74     controller_auth = {
- 75         'username': 'v196user1',  # your sessions anyconnect userid for user1
- 76         'password': 'c561cc'      # your sessions anyconnect password
- 77     }
+``` python
+      # Controller
+ 
+      controller_address = {
+          'scheme': 'http',
+          'host': '64.100.10.119',  # Public IP for your session
+          'port': 6644              # Must be 6644 for public ip access
+      }
+ 
+      controller_auth = {
+          'username': 'v196user1',  # your sessions anyconnect userid for user1
+          'password': 'c561cc'      # your sessions anyconnect password
+      }
 ```
 
 ![](media/pub_ip.png)
