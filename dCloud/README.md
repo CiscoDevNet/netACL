@@ -105,14 +105,24 @@ Once connected, your laptop will be in the same network as the routers in your t
 
 1. Schedule and have a dCloud Beryllium ODL demo (per the above).
 
-2. Download netACL app from github located at [CiscoDevnet's Github](https://github.com/CiscoDevNet/netACL)
+2. Access your demo and start a UserVM. For details, see dCloud Demo instructions for Pathman_SR - Starting the UserVM is the same for netACL:
+ - <http://198.18.133.1:8087/#scenario-7-pathman-segment-routing> - If AnyConnect to your demo
+ - <http://{public_ip}:15000/docs/#scenario-7-pathman-segment-routing> - If using public ip access
+
+3. Logon to your UserVM with cisco/cisco at port 8022
+ 
+ ```
+ ssh cisco@198.18.1.80 -p 8022
+ ```
+
+4. Download netACL app from github located at [CiscoDevnet's Github](https://github.com/CiscoDevNet/netACL)
 
  ```
  git clone https://github.com/CiscoDevNet/netACL
- cd 
+ cd netACL
  ```
  
-3. Software prerequisites (above and beyond what is required for dCloud access):
+5. Software prerequisites (above and beyond what is required for dCloud access):
 
  ```
 pip2.7 install -r frontend/requirements.txt
@@ -122,39 +132,39 @@ pip2.7 install -r backend/requirements.txt
  **Note:** If installing somewhere else than in the demo's UserVM, you should probably use _pip_ instead of _pip.2.7_
 
 
-4. You should the following in your **netACL** directory. (disregard dates)
+6. You should the following in your **netACL** directory. (disregard dates)
 
 
  ```
-total 48
-drwxr-xr-x  12 staff    408 Jul  3 13:00 .
+drwxr-xr-x  13 staff    442 Jul 11 13:22 .
 drwxr-xr-x  40 staff   1360 Jun 27 21:33 ..
-drwxr-xr-x  16 staff    544 Jul  2 16:08 .git
+drwxr-xr-x  16 staff    544 Jul 11 20:38 .git
 -rw-r--r--   1 staff     94 Jul  2 15:48 .gitignore
-drwxr-xr-x   9 staff    306 Jul  3 13:07 .idea
+drwxr-xr-x   9 staff    306 Jul 11 17:41 .idea
 -rw-r--r--   1 staff   1298 Jun 27 21:33 CONTRIBUTING.md
 -rw-r--r--   1 staff  11348 Jun 27 21:33 LICENSE
--rw-r--r--   1 staff   3161 Jul  2 16:06 README.md
-drwxr-xr-x  16 staff    544 Jul  2 15:49 backend
-drwxr-xr-x   4 staff    136 Jul  3 13:07 dCloud
-drwxr-xr-x  16 staff    544 Jul  2 15:50 frontend
+-rw-r--r--   1 staff   2987 Jul  6 17:37 README.md
+drwxr-xr-x  16 staff    544 Jul  5 10:37 backend
+drwxr-xr-x   4 staff    136 Jul 11 20:51 dCloud
+drwxr-xr-x   6 staff    204 Jul 11 13:27 docker
+drwxr-xr-x  16 staff    544 Jul  5 11:16 frontend
 drwxr-xr-x   7 staff    238 Jul  2 15:48 images
 ```
 
 
-5. Type in the following command to start the frontend rest_server:
+7. Type in the following command to start the frontend rest_server:
 
  ```
  python2.7 -m frontend.rest_server_v5
  ```
 
-6. Start the backend of the app with the command:
+8. Start the backend of the app with the command:
 
  ```
  python -m backend.app
  ```
 
-7. Open your Chrome Browser - URL to launch netACL app: [http:/198.18.1.80:8020/cisco-ctao/apps/acl/index.html](http://198.18.1.80:8020/cisco-ctao/apps/acl/index.html). This assumes that your app is running in the demos UserVM.
+9. Open your Chrome Browser - URL to launch netACL app: [http:/198.18.1.80:8020/cisco-ctao/apps/acl/index.html](http://198.18.1.80:8020/cisco-ctao/apps/acl/index.html). This assumes that your app is running in the demos UserVM.
 
 
 
