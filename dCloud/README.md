@@ -155,17 +155,7 @@ drwxr-xr-x   7 staff    238 Jul  2 15:48 images
  ```
 
 7. Open your Chrome Browser - URL to launch netACL app: [http:/198.18.1.80:8020/cisco-ctao/apps/acl/index.html](http://198.18.1.80:8020/cisco-ctao/apps/acl/index.html). This assumes that your app is running in the demos UserVM.
-8. Please also follow the step [Adding Dummy ACLs](#adding-dummy-acls) to avoid this [Caveat](#accesslist-downloads)
 
-
-## Adding Dummy ACLs
-If you are using this app with our dCloud demo, you will need to go through these steps. See this [Caveat](#accesslist_downloads) for why.
-
-1. Access the demos **Launch Control UI** at either:
- - <http://198.18.133.1:8000> if AnyConnected to the demo
- - <http://{public_ip}:15000> if using public ip access, and logon in with AnyConnext credentials
-
-2. Select **Objects**, then **Automation** and **checkACLs**
 
 
 # What if I don't have Cisco Anyconnect installed?
@@ -207,21 +197,4 @@ You can use them directly from your Pathman_SR app, by changing the **backend/se
 
 # Caveats
 
-Only one major caveat is know at this time and it relates to a IOS XRv NETCONF issue.
-
-<span id="accesslist_downloads" class="anchor">
-### Accesslist downloads
-IOS XRv version 5.3.x and 6.0.0 will not accept an access-list to be downloaded to it, **unless** there already is an access list present in the routers configuration.
-
-### Workaround
-1. We suggest creating a dummy acl in each router like this:
-
- ```
- ipv4 access-list dont_touch
-  10 permit ipv4 any any
- !
- ```
-
-2. The netACL app will disregard and acl named 'dont_touch' and they will **not** be displayed by the app.
-
-3. For the dCloud demo, you can add this acl to **all** routers in the topology by following the step above called [Adding Dummy ACLs](#adding-dummy-acls)
+No known caveats at this time.
