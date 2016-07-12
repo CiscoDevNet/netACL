@@ -5,9 +5,9 @@ from settings import logger
 from backend.util.errors import ValidationError
 from backend.util.exceptions import HttpClientException
 from utils import validate_acl_name
-from urls import interfaces_url, acl_url
+from urls import StandardAclUrlDispatcher
 from backend.util.http_client import HttpClient
-from backend.util.utils import get_protocol, url_join
+from backend.util.utils import get_protocol
 
 
 class AclOps(object):
@@ -35,12 +35,7 @@ class AclParserStandard(object):
     PARSE = 0
     UNPARSE = 1
 
-    POST_INTERFACE_URL = url_join(interfaces_url,
-                             '/interface-configuration/act/{}')
-    PUT_INTERFACE_URL = url_join(POST_INTERFACE_URL,
-                             '/Cisco-IOS-XR-ip-pfilter-cfg:ipv4-packet-filter/{}')
-    DELETE_INTERFACE_URL = PUT_INTERFACE_URL
-    PUT_ACL_URL = url_join(acl_url, '/accesses/access/{}')
+    url_dispatcher = StandardAclUrlDispatcher
 
     MAPPINGS = {
         "acl_name": ('acl-name', 'access-list-name'),
@@ -131,31 +126,15 @@ class AclParserStandard(object):
         }
 
     @staticmethod
-    def _build_out_payload(acl_name_dict, out_aces, parse_mode):
-        out_aces = sorted(out_aces, key=lambda k: k["sequence-number"])
-        out_payload = {}
-        if parse_mode == AclParserStandard.PARSE:
-            out_payload["access"] = [{}]
-            out_payload["access"][0].update(acl_name_dict)
-            out_payload["access"][0].update({
-                "access-list-entries": {
-                    "access-list-entry": out_aces
-                }
-            })
-        else:
-            out_payload.update(acl_name_dict)
-            out_payload.update({
-                "ace": out_aces
-            })
-        return out_payload
+    def _fill_acl_template(acl, parse_mode=PARSE, method=HttpClient.POST):
 
-    @staticmethod
-    def _fill_acl_template(acl, parse_mode=PARSE):
-        in_index = parse_mode if parse_mode == AclParserStandard.PARSE or parse_mode == AclParserStandard.UNPARSE else 0
-        out_index = 1 - in_index
+        # Set up direction of parsing ('PARSE' for UI to controller, 'UNPARSE' for controller to UI)
+        IN = parse_mode if parse_mode == AclParserStandard.PARSE or parse_mode == AclParserStandard.UNPARSE else 0
+        OUT = 1 - IN
 
         validator = AclValidator()
 
+        # prepare incoming aces for parsing to outcoming
         in_aces = AclParserStandard._get_aces(acl, parse_mode)
         out_aces = []
 
@@ -169,15 +148,17 @@ class AclParserStandard(object):
             }
 
             for direction in ["source", "destination"]:
+                # Prepare one-to-one field mapping class
                 network_mappings = AclParserStandard.MAPPINGS[direction]
 
+                # Network (address and wild card bits) fields parsing
                 network_name = "{}-network".format(direction)
                 if network_name in ace_entry_in:
                     network_in = ace_entry_in[network_name]
                     network_out = {}
 
-                    in_address_field = network_mappings.get("address")[in_index]
-                    out_address_field = network_mappings.get("address")[out_index]
+                    in_address_field = network_mappings.get("address")[IN]
+                    out_address_field = network_mappings.get("address")[OUT]
 
                     address = network_in.get(in_address_field)
 
@@ -185,33 +166,34 @@ class AclParserStandard(object):
                         validator.validate_ip(in_address_field, address)
                         network_out[out_address_field] = address
 
-                        wild_card_bits = network_in.get(network_mappings.get("wild-card-bits")[in_index])
+                        wild_card_bits = network_in.get(network_mappings.get("wild-card-bits")[IN])
                         if wild_card_bits and wild_card_bits != "any":
-                            validator.validate_ip(network_mappings.get("wild-card-bits")[in_index], wild_card_bits)
+                            validator.validate_ip(network_mappings.get("wild-card-bits")[IN], wild_card_bits)
                             if wild_card_bits != "0.0.0.0":
-                                network_out[network_mappings.get("wild-card-bits")[out_index]] = wild_card_bits
+                                network_out[network_mappings.get("wild-card-bits")[OUT]] = wild_card_bits
                         else:
-                            network_out[network_mappings.get("wild-card-bits")[out_index]] = "0.0.0.0"
+                            network_out[network_mappings.get("wild-card-bits")[OUT]] = "0.0.0.0"
 
                     if network_out != {}:
                         ace_entry_out[network_name] = network_out
 
+                # Port (numbers and operator if present) fields parsing
                 port_name = "{}-port".format(direction)
                 if port_name in ace_entry_in:
                     in_port = ace_entry_in[port_name]
                     out_port = {}
 
-                    in_port_mode_name = network_mappings.get("port-mode")[in_index]
-                    in_first_port_name = network_mappings.get("first-port")[in_index]
-                    in_second_port_name = network_mappings.get("second-port")[in_index]
+                    in_port_mode_name = network_mappings.get("port-mode")[IN]
+                    in_first_port_name = network_mappings.get("first-port")[IN]
+                    in_second_port_name = network_mappings.get("second-port")[IN]
 
                     if in_port_mode_name in in_port:
                         validator.validate_operator(in_port_mode_name, in_port[in_port_mode_name])
-                        out_port[network_mappings.get("port-mode")[out_index]] = in_port[in_port_mode_name]
+                        out_port[network_mappings.get("port-mode")[OUT]] = in_port[in_port_mode_name]
                         if in_first_port_name in in_port and in_port[in_first_port_name] != "":
-                            out_port[network_mappings.get("first-port")[out_index]] = in_port[in_first_port_name]
+                            out_port[network_mappings.get("first-port")[OUT]] = in_port[in_first_port_name]
                         if in_second_port_name in in_port and in_port[in_second_port_name] != "":
-                            out_port[network_mappings.get("second-port")[out_index]] = in_port[in_second_port_name]
+                            out_port[network_mappings.get("second-port")[OUT]] = in_port[in_second_port_name]
 
                     ace_entry_out[port_name] = out_port
 
@@ -222,34 +204,66 @@ class AclParserStandard(object):
             out_aces.append(ace_entry_out)
 
         acl_name_dict = {
-            AclParserStandard.MAPPINGS.get('acl_name')[out_index]: acl.get(AclParserStandard.MAPPINGS.get('acl_name')[in_index])
+            AclParserStandard.MAPPINGS.get('acl_name')[OUT]: acl.get(AclParserStandard.MAPPINGS.get('acl_name')[IN])
         }
-        return AclParserStandard._build_out_payload(acl_name_dict, out_aces, parse_mode)
+
+        out_aces = sorted(out_aces, key=lambda k: k["sequence-number"])
+        out_payload = {}
+
+        if parse_mode == AclParserStandard.PARSE:
+            # Prepare netconf-valid structure of acls
+            out_payload["access"] = [{}]
+            out_payload["access"][0].update(acl_name_dict)
+            out_payload["access"][0].update({
+                "access-list-entries": {
+                    "access-list-entry": out_aces
+                }
+            })
+
+            # POST assumes using a higher level url, so we need to wrap the payload in more layers
+            if method == HttpClient.POST:
+                out_payload = {
+                    "Cisco-IOS-XR-ipv4-acl-cfg:ipv4-acl-and-prefix-list": {
+                        "accesses": out_payload
+                    }
+                }
+        else:
+            out_payload.update(acl_name_dict)
+            out_payload.update({
+                "ace": out_aces
+            })
+
+        return out_payload
 
     @upload_required
     def apply_acls(self):
         acl_name = self.acl.get('acl-name')
         validate_acl_name(acl_name)
-
-        access_list = self._fill_acl_template(self.acl, self.PARSE)
         http_client = HttpClient()
 
         for node in self.nodes:
-            http_client.put(self.PUT_ACL_URL.format(node.get('name'), acl_name), access_list)
+            try:
+                acl_payload = self._fill_acl_template(self.acl, self.PARSE, HttpClient.PUT)
+                http_client.put(self.url_dispatcher.PUT_ACL_URL.format(node.get('name'), acl_name), acl_payload)
+            except HttpClientException as e:
+                logger.debug("PUT acl to node failed, trying POST. Error: {}".format(e.message))
+                acl_payload = self._fill_acl_template(self.acl, self.PARSE, HttpClient.POST)
+                http_client.post(self.url_dispatcher.POST_ACL_URL.format(node.get('name')), acl_payload)
 
             for interface_name in node.get('interface', []):
                 try:
+                    interface_payload = self._fill_interface_template(self.bind, acl_name, HttpClient.PUT)
+                    interface_url = self.url_dispatcher.PUT_INTERFACE_URL.format(node.get('name'),
+                                                                          urllib.quote(interface_name, ''),
+                                                                          self.bind)
+                    http_client.put(interface_url, interface_payload)
+                except HttpClientException as e:
+                    logger.debug("PUT acl to interface failed, trying POST. Error: {}".format(e.message))
                     interface_payload = self._fill_interface_template(self.bind, acl_name, HttpClient.POST)
-                    interface_url = self.POST_INTERFACE_URL.format(node.get('name'),
+                    interface_url = self.url_dispatcher.POST_INTERFACE_URL.format(node.get('name'),
                                                                    urllib.quote(interface_name, ''))
                     http_client.post(interface_url, interface_payload)
-                except HttpClientException as e:
-                    logger.debug("POST acl failed, trying PUT. Error: {}".format(e.message))
-                    interface_payload = self._fill_interface_template(self.bind, acl_name, HttpClient.PUT)
-                    interface_url = self.PUT_INTERFACE_URL.format(node.get('name'),
-                                                                  urllib.quote(interface_name, ''),
-                                                                  self.bind)
-                    http_client.put(interface_url, interface_payload)
+
 
     @upload_required
     def delete_acl(self):
@@ -260,10 +274,10 @@ class AclParserStandard(object):
 
         for node in self.nodes:
             for interface in node.get("interface", []):
-                http_client.delete(self.DELETE_INTERFACE_URL.format(node.get('name'),
+                http_client.delete(self.url_dispatcher.DELETE_INTERFACE_URL.format(node.get('name'),
                                                                      urllib.quote(interface, ''),
                                                                      self.bind))
-            http_client.delete(self.PUT_ACL_URL.format(node.get('name'), acl_name))
+            http_client.delete(self.url_dispatcher.PUT_ACL_URL.format(node.get('name'), acl_name))
 
     def unparse_acl(self, acl):
         return self._fill_acl_template(acl, self.UNPARSE)

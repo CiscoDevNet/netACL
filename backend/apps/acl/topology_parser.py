@@ -8,7 +8,7 @@ from tornado.httpclient import HTTPError
 from backend.apps.acl.utils import is_acl_name_hidden
 from backend.util.app_utils import fetch_and_persist
 from backend.util.exceptions import HttpClientException
-from urls import interfaces_url, acl_url
+from urls import CommonUrlDispatcher
 from settings import logger, acl_path
 from backend.settings import interfaces_path
 from backend.util.topology_parser import AbstractTopology, ValidationError
@@ -30,6 +30,8 @@ class AbstractAclTopologyParser(object):
 
     __metaclass__ = abc.ABCMeta
 
+    url_dispatcher = CommonUrlDispatcher
+
     def add_topo_prefix(self, field):
         topo_prefix = 'l3-unicast-igp-topology'
         return ':'.join([topo_prefix, field])
@@ -37,7 +39,8 @@ class AbstractAclTopologyParser(object):
     @staticmethod
     def fetch_interfaces(node, default=None):
         try:
-            return fetch_and_persist(interfaces_url.format(node), os.path.join(interfaces_path, node + "_interfaces.json"))
+            return fetch_and_persist(AbstractAclTopologyParser.url_dispatcher.GET_INTERFACES_URL.format(node),
+                                     os.path.join(interfaces_path, node + "_interfaces.json"))
         except HTTPError as e:
             logger.exception(e.message)
             return default
@@ -45,7 +48,8 @@ class AbstractAclTopologyParser(object):
     @staticmethod
     def fetch_acl(node, default=None):
         try:
-            return fetch_and_persist(acl_url.format(node), os.path.join(acl_path, node + "_acl.json"), default=default)
+            return fetch_and_persist(AbstractAclTopologyParser.url_dispatcher.GET_ACL_URL.format(node),
+                                     os.path.join(acl_path, node + "_acl.json"), default=default)
         except HTTPError as e:
             logger.exception(e.message)
             return default
