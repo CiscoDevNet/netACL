@@ -89,7 +89,8 @@ class AclParserStandard(object):
         self.acl = payload.get('acl')
         if not self.acl:
             raise ValueError('No acl specified')
-        if not isinstance(self.acl.get('ace'), list) or len(self.acl.get('ace')) == 0:
+        if self.operation == AclOps.APPLY \
+                and (not isinstance(self.acl.get('ace'), list) or len(self.acl.get('ace'))) == 0:
             raise ValueError('No ace specified or format is wrong')
 
     @upload_required
