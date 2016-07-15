@@ -786,8 +786,7 @@
                                                 {
                                                     tag: 'button',
                                                     props: {
-                                                        'class': 'btn btn-sm btn-info for-view',
-                                                        'style': 'display: none'
+                                                        'class': 'btn btn-sm btn-info for-view'
                                                     },
                                                     content: [
                                                         {

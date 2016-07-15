@@ -50,8 +50,8 @@ class HttpClient(object):
                               headers=headers,
                               auth_username=controller_auth['username'],
                               auth_password=controller_auth['password'],
-                              connect_timeout=http_client_settings.get("timeout", {}).get("connect", 3),
-                              request_timeout=http_client_settings.get("timeout", {}).get("request", 10))
+                              connect_timeout=http_client_settings.get("timeouts", {}).get("connect", 3),
+                              request_timeout=http_client_settings.get("timeouts", {}).get("request", 10))
 
         if has_payload:
             if data_type == "json":

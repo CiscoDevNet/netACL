@@ -37,9 +37,8 @@ class ControllerOperations(object):
             logger.exception(e.message)
             return False, e.message
 
-    def apply_acls(self, payload_string):
+    def apply_acls(self, payload):
         try:
-            payload = json.loads(payload_string)
             self.get_acl_parser(operation=AclOps.APPLY).upload_payload(payload)
             try:
                 self.get_acl_parser().apply_acls()
@@ -53,15 +52,30 @@ class ControllerOperations(object):
             logger.exception(e.message)
             return False, e.message
 
-    def delete_acl(self, payload_string):
+    def edit_acl(self, payload):
         try:
-            payload = json.loads(payload_string)
+            self.get_acl_parser(operation=AclOps.EDIT).upload_payload(payload)
+            try:
+                self.get_acl_parser().edit_acl()
+            except Exception as e:
+                error = e.response.body if hasattr(e, 'response') else e.message
+                logger.exception(error)
+                return False, error
+
+            return True, 'ok'
+        except Exception as e:
+            logger.exception(e.message)
+            return False, e.message
+
+    def delete_acl(self, payload):
+        try:
             self.get_acl_parser(operation=AclOps.DELETE).upload_payload(payload)
             try:
                 self.get_acl_parser().delete_acl()
             except Exception as e:
-                logger.exception(e.message)
-                return False, json.loads(e.response.body) if hasattr(e, 'response') else e.message
+                error = e.response.body if hasattr(e, 'response') else e.message
+                logger.exception(error)
+                return False, error
 
             return True, 'ok'
         except Exception as e:

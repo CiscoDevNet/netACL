@@ -50,8 +50,18 @@ class Handler(BaseHandler):
             self.set_status(status)
 
     def post(self, *args, **kwargs):
-        logger.debug('Apply acl payload: {}'.format(self.request.body))
-        result, msg = ControllerOperations().apply_acls(self.request.body)
+        node = self._get_node(kwargs.get('path', ''))
+        payload = json.loads(self.request.body)
+
+        if node:
+            payload['node'] = node
+
+            logger.debug('Edit acl payload: {}'.format(payload))
+            result, msg = ControllerOperations().edit_acl(payload)
+        else:
+            logger.debug('Apply acl payload: {}'.format(payload))
+            result, msg = ControllerOperations().apply_acls(payload)
+
         response = {
             'ret_code': result,
             'message': msg
@@ -66,8 +76,10 @@ class Handler(BaseHandler):
             self.set_status(INTERNAL_SERVER_ERROR, json.dumps(msg))
 
     def delete(self, *args, **kwargs):
-        logger.debug('Delete acl payload: {}'.format(self.request.body))
-        result, msg = ControllerOperations().delete_acl(self.request.body)
+        payload = json.loads(self.request.body)
+
+        logger.debug('Delete acl payload: {}'.format(payload))
+        result, msg = ControllerOperations().delete_acl(payload)
         response = {
             'ret_code': result,
             'message': msg

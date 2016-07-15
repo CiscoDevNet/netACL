@@ -1,3 +1,4 @@
+import json
 import urllib
 
 from acl_validator import AclValidator
@@ -13,9 +14,10 @@ from backend.util.utils import get_protocol
 class AclOps(object):
     GET = 'get'
     APPLY = 'apply'
+    EDIT = 'edit'
     DELETE = 'delete'
 
-    SUPPORTED_OPS = [GET, APPLY, DELETE]
+    SUPPORTED_OPS = [GET, APPLY, EDIT, DELETE]
 
 
 def upload_required(func):
@@ -57,6 +59,7 @@ class AclParserStandard(object):
 
     def __init__(self, operation='apply'):
         self.payload = None
+        self.node = None
         self.nodes = []
         self.bind = None
         self.acl = None
@@ -70,17 +73,24 @@ class AclParserStandard(object):
         self.payload = payload
         self.payload = self.unwrap_payload()
 
-        self.nodes = self.payload.get('node')
-        if not self.nodes:
-            raise ValueError('No nodes specified')
+        if self.operation in [AclOps.APPLY, AclOps.DELETE]:
+            self.nodes = self.payload.get('node')
+            if not self.nodes:
+                raise ValueError('No nodes specified')
 
-        self.bind = payload.get('bind')
-        if not self.bind or self.bind != 'inbound' and self.bind != 'outbound':
-            raise ValueError('No binding specified or invalid format')
+            self.bind = payload.get('bind')
+            if not self.bind or self.bind != 'inbound' and self.bind != 'outbound':
+                raise ValueError('No binding specified or invalid format')
+        elif self.operation == AclOps.EDIT:
+            self.node = self.payload.get('node')
+            if not self.node:
+                raise ValueError('No node specified')
 
         self.acl = payload.get('acl')
         if not self.acl:
             raise ValueError('No acl specified')
+        if not isinstance(self.acl.get('ace'), list) or len(self.acl.get('ace')) == 0:
+            raise ValueError('No ace specified or format is wrong')
 
     @upload_required
     def get_nodes(self):
@@ -264,6 +274,13 @@ class AclParserStandard(object):
                                                                    urllib.quote(interface_name, ''))
                     http_client.post(interface_url, interface_payload)
 
+    @upload_required
+    def edit_acl(self):
+        acl_name = self.acl.get('acl-name')
+        validate_acl_name(acl_name)
+
+        acl_payload = self._fill_acl_template(self.acl, self.PARSE, HttpClient.PUT)
+        HttpClient().put(self.url_dispatcher.PUT_ACL_URL.format(self.node, acl_name), acl_payload)
 
     @upload_required
     def delete_acl(self):
