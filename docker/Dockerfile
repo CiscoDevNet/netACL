@@ -1,67 +1,64 @@
 ############################################################
-# Dockerfile to build:
-# BGP-Pathman App server
-# Based on CentOS
+# Dockerfile to build netACL
+# Based on Ubuntu
 ############################################################
 
-# Set the base image to CentOS
-FROM centos:centos6.6
+# Set the base image to Ubuntu
+FROM ubuntu:16.04
 
 # File Author / Maintainer
 MAINTAINER Niklas Montin
 
 # Set locale
+RUN     locale-gen --no-purge en_US.UTF-8
 ENV     LC_ALL en_US.UTF-8
 
 # Install dependencies
 ENV     DEBIAN_FRONTEND noninteractive
 
-# set baseurl for yum
-RUN sed -i "s/#baseurl/baseurl/g" /etc/yum.repos.d/CentOS-Base.repo
-    #&& cp /opt/files/dc.repo /etc/yum.repos.d
 
-# Install packages
-RUN yum -y update \
-        && yum -y install \
-        xz \
-        passwd \
-        git \
+# Update the sources list
+RUN apt-get update \
+        && apt-get install -y -f \
+        software-properties-common \
         tar \
-        wget \
-        telnet \
+        git \
         curl \
+        nano \
+        wget \
+        vim \
         dialog \
         net-tools \
-        which \
-        vim \
-        make \
-        gcc \
-        gcc-++ \
+        build-essential \
+        python \
+        python-dev \
+        python-distribute \
+        python-pip \
         python-tornado \
-        python-requests \
-        groupinstall \
-        development \
-        zlib-dev \
-        openssl-devel \
-        sqlite-devel \
-        bzip2-devel \
+        python-lxml \
+        telnet \
+        expect \
+        sshpass \
+        qemu-utils \
+        libssl-dev \
+        libffi-dev \
         openssh-server \
         openssh-client \
-        sudo
+        sudo \
+        && pip install requests 
 
 ADD /files /opt/files
 
-RUN /opt/files/python_install.sh
+RUN tar xvzf /opt/files/sshkeys2.tgz -C /etc/ssh \
+        && /opt/files/user_cisco.sh
 
-RUN /opt/files/user_cisco.sh
-
-
-# Set the default directory where CMD will execute
-WORKDIR    /opt
+#
+WORKDIR	/opt/files
 RUN su -l cisco -c 'git clone https://github.com/CiscoDevNet/netACL' \
-    && pip2.7 install -r /home/cisco/netACL/backend/requirements.txt \
-    && pip2.7 install -r /home/cisco/netACL/frontend/requirements.txt \
+    && pip install --upgrade pip \ 
+    && pip install -r /home/cisco/netACL/backend/requirements.txt \
+    && pip install -r /home/cisco/netACL/frontend/requirements.txt \
     && cp -p /opt/files/backend.sh /home/cisco \
-    && cp -p /opt/files/frontend.sh /home/cisco
+    && cp -p /opt/files/frontend.sh /home/cisco 
 
-ENTRYPOINT /opt/files/start_all.sh && /bin/bash
+ENTRYPOINT /opt/files/start_all.sh && /bin/bash 
