@@ -44,7 +44,7 @@ netACL addresses all of the requirements. netACL visualizes a router network. Th
 
 The architecture netACL is depicted here.
 
-![](demo/pathman-SR-arch.png)
+![](images/netacl-arch-picture.jpg)
 Figure 1. Pathman-SR Architecture
 
 The Pathman-SR architecture is similar to the Pathman architecture. It uses BGP-LS to collect and render the network. It uses PCEP to program SR segment stacks on the ingress router which define the path of segments packets should traverse (aka SR-path) 
