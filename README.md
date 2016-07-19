@@ -47,7 +47,7 @@ The architecture netACL is depicted here.
 ![](images/netacl-arch-picture.jpg)
 Figure 1. netACL Architecture
 
-Working from the bottom up first. The desired end result is a nework is a router network with ACLs configured on specific interfaces. Present is a YANG model describing what values can be configured on a router and, what operational stats related to ACLs can be extracted. A netconf session is present from an ODL southbould plug-in and a netconf server on the routers. Netconf is used to convey ACL configuration parameters to the routers. RESTCONF APIs specific to ACL management are auto-generated from ODL based on ACL YANG models. 
+Working from the bottom up first. The desired end result is a router network with ACLs configured on specific interfaces. Present is a YANG model describing what values can be configured on a router and, what operational stats related to ACLs can be extracted. A netconf session is present from an ODL southbould plug-in and a netconf server on the routers. Netconf is used to convey ACL configuration parameters to the routers. RESTCONF APIs specific to ACL management are auto-generated from ODL based on ACL YANG models. 
 
 Note: Not shown but present in this application is a BGP-LS session between ODL and a router configured as a BGP-LS speaker. The netACL uses this information to render a view of the network topology in netACL
 
