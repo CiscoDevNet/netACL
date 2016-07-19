@@ -36,11 +36,11 @@ Beta
 
 ### Application Overview
 
-ACLs are a fundamental portion for the configuration of routers in enterprise and SP networks. ACLs (composed of multiple access control elements (ACE)) are applied on a per-interface basis. Operators are faced with the daunting task of ACL management and deployment given a large number of routers in a network. 
+ACLs are a fundamental portion for the configuration of routers in enterprise and SP networks. ACLs (composed of multiple access control elements (ACE)) are applied on a per-router/per-interface basis. Operators are faced with the daunting task of ACL management and deployment given a large number of routers in a network.The work involved is O(# of routers * # of interfaces per router)
 
-In most (if not all) cases, operators will resort to customized scripts. These require constant maintenance and worse, must support multi-vendor networks. Thus an application that "abstracts away" the specifics of ACL configuration but makes it easier automate deployment is required. With a nice GUI. And multi-vendor support. On open source. 
+In most (if not all) cases, operators will resort to customized scripts. These require constant maintenance and worse, must support multi-vendor networks. An application that "abstracts away" the specifics of ACL configuration but makes it easier automate deployment is required. With a nice GUI. And multi-vendor support. On open source. All good.
 
-netACL addresses all of the requirements. netACL visualizes a router network and enables the operator to easily define, then point/click for deployment. It runs on top of ODL and uses netconf to exchange ACL configuration information with the router(s).
+netACL addresses all of the requirements. netACL visualizes a router network. The operator to easily define, then point/click for deployment. It runs on top of ODL and uses netconf to exchange ACL configuration information with the router(s).
 
 The architecture netACL is depicted here.
 
