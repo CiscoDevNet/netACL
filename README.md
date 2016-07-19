@@ -57,30 +57,7 @@ The front-end of the app uses:
 The back-end of the app employs a number of Python modules. It interacts with the front-end "northbound" while executing ACL-specific RESTCONF API request and responses with ODL. The combination of the netACL front-end and back-end provide an excellent example of a working ODL application.
 
 
-### Pathman-SR Examples
 
-The following are example screenshots from Pathman-SR illustating the look/feel of specific functions. The nodes shown in the topology display a "PC" icon meaning it supports PCEP which is the protocol running between the router or ODL carrying SR-path segment stacks. This means the router can be an ingress or head-end for an SR-path. The "SR" indicates it supports segmenting routing an ingress, egress or intermediate router. Just to avoid any confusion Pathman-SR only supports SR-path management.
-
-
-![](demo/setup-path-panel.png)
-Figure 2. Search for an optimal path
-
-In this example an SR-path between atl and chi has been requested. This panel shows the SR-paths computed. The path selected on the right is highlighted in the topology on the left. 
-
-![](demo/path-deployed-message.png)
-Figure 3. Path has been deployed
-
-This shows the selected path that was in turn deployed (programmed) into the network.
-
-![](demo/deployed-path-list.png)
-Figure 4. List of all deployed paths
-
-This panel shows the list of deployed (active) SR-paths on the right and the selected one is highlighted in the topology.
-
-![](demo/node-details.png)
-Figure 5. Random node info. Link and/or path details are also available in one-two-click
-
-And finally the panel provides information on specific nodes.
 
 ## Getting started
 
@@ -95,7 +72,7 @@ And finally the panel provides information on specific nodes.
 3. Make sure current user has enough permissions to create system path specified in "log_file" variable
 4. Run ```python -m backend.app```
 
-## Running ACL app
+## Running the netACL app
 After deploying [frontend](#run-frontend) and [backend](#run-backend):
 
 1. Open your browser. *(TBD - supported browsers)*
