@@ -45,19 +45,17 @@ netACL addresses all of the requirements. netACL visualizes a router network. Th
 The architecture netACL is depicted here.
 
 ![](images/netacl-arch-picture.jpg)
-Figure 1. Pathman-SR Architecture
+Figure 1. netACL Architecture
 
-The Pathman-SR architecture is similar to the Pathman architecture. It uses BGP-LS to collect and render the network. It uses PCEP to program SR segment stacks on the ingress router which define the path of segments packets should traverse (aka SR-path) 
+Working from the bottom up first. The desired end result is a nework is a router network with ACLs configured on specific interfaces. Present is a YANG model describing what values can be configured on a router and, what operational stats related to ACLs can be extracted. A netconf session is present from an ODL southbould plug-in and a netconf server on the routers. Netconf is used to convey ACL configuration parameters to the routers. RESTCONF APIs specific to ACL management are auto-generated from ODL based on ACL YANG models. 
 
-A little color is added below on some of the components of the app itself. This might help those who are reviewing the code to better understand some of the pieces. 
+Note: Not shown but present in this application is a BGP-LS session between ODL and a router configured as a BGP-LS speaker. The netACL uses this information to render a view of the network topology in netACL
 
 The front-end of the app uses:
-- NeXt is the UI framework used to render topologies and graphs. This is open source and a [formal ODL project](https://wiki.opendaylight.org/view/NeXt:Main).
-- [AngularJS](https://angularjs.org/) is a popular UI framework based on the model-view-controller (MVC) paradigm. This enables efficient/modularized development/testing of the code.
+- NeXt is the UI framework used to render topologies and ACL configuration and management forms. This is open source and a [formal ODL project](https://wiki.opendaylight.org/view/NeXt:Main).
  
-The back-end of the app employs a number of Python modules that among other things compute SR-path candidates and execute RESTCONF API calls directly to ODL. The combination of the Pathman-SR application front-end and back-end provide an excellent example of a working ODL application.
+The back-end of the app employs a number of Python modules. It interacts with the front-end "northbound" while executing ACL-specific RESTCONF API request and responses with ODL. The combination of the netACL front-end and back-end provide an excellent example of a working ODL application.
 
-A final note: some or all of the routers must support segmenting routing (software configuration knob). In this example all routers have SR turned on (denoted by a small "SR" icon). In actual deployments a subset of the routers would have SR turned. 
 
 ### Pathman-SR Examples
 
