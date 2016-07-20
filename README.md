@@ -59,7 +59,7 @@ The back-end of the app employs a number of Python modules. It interacts with th
 
 ### netACL Operations
 
-Described in Running the netACL section below.
+Described in *_Running the netACL app_* section below.
 
 ## Getting started
 
