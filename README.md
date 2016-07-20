@@ -57,7 +57,9 @@ The front-end of the app uses:
 The back-end of the app employs a number of Python modules. It interacts with the front-end "northbound" while executing ACL-specific RESTCONF API request and responses with ODL. The combination of the netACL front-end and back-end provide an excellent example of a working ODL application.
 
 
+### netACL Operations
 
+Described in Running the netACL section below.
 
 ## Getting started
 
