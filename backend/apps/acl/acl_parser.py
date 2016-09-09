@@ -254,26 +254,42 @@ class AclParserStandard(object):
 
         for node in self.nodes:
             try:
-                acl_payload = self._fill_acl_template(self.acl, self.PARSE, HttpClient.PUT)
-                http_client.put(self.url_dispatcher.PUT_ACL_URL.format(node.get('name'), acl_name), acl_payload)
-            except HttpClientException as e:
-                logger.debug("PUT acl to node failed, trying POST. Error: {}".format(e.message))
+                # Fix for Boron bug: PUT/POST swapped - PUT will erroneously give an OK, when it should fail
+                # acl_payload = self._fill_acl_template(self.acl, self.PARSE, HttpClient.PUT)
+                # http_client.put(self.url_dispatcher.PUT_ACL_URL.format(node.get('name'), acl_name), acl_payload)
                 acl_payload = self._fill_acl_template(self.acl, self.PARSE, HttpClient.POST)
                 http_client.post(self.url_dispatcher.POST_ACL_URL.format(node.get('name')), acl_payload)
+            except HttpClientException as e:
+                # logger.debug("PUT acl to node failed, trying POST. Error: {}".format(e.message))
+                logger.debug("POST acl to node failed, trying PUT. Error: {}".format(e.message))
+                # acl_payload = self._fill_acl_template(self.acl, self.PARSE, HttpClient.POST)
+                # http_client.post(self.url_dispatcher.POST_ACL_URL.format(node.get('name')), acl_payload)
+                acl_payload = self._fill_acl_template(self.acl, self.PARSE, HttpClient.PUT)
+                http_client.put(self.url_dispatcher.PUT_ACL_URL.format(node.get('name'), acl_name), acl_payload)
 
             for interface_name in node.get('interface', []):
                 try:
+                    # interface_payload = self._fill_interface_template(self.bind, acl_name, HttpClient.PUT)
+                    # interface_url = self.url_dispatcher.PUT_INTERFACE_URL.format(node.get('name'),
+                    #                                                      urllib.quote(interface_name, ''),
+                    #                                                      self.bind)
+                    # http_client.put(interface_url, interface_payload)
+                    interface_payload = self._fill_interface_template(self.bind, acl_name, HttpClient.POST)
+                    interface_url = self.url_dispatcher.POST_INTERFACE_URL.format(node.get('name'),
+                                                                   urllib.quote(interface_name, ''))
+                    http_client.post(interface_url, interface_payload)
+                except HttpClientException as e:
+                    # logger.debug("PUT acl to interface failed, trying POST. Error: {}".format(e.message))
+                    logger.debug("POST acl to interface failed, trying PUT. Error: {}".format(e.message))
+                    # interface_payload = self._fill_interface_template(self.bind, acl_name, HttpClient.POST)
+                    # interface_url = self.url_dispatcher.POST_INTERFACE_URL.format(node.get('name'),
+                    #                                               urllib.quote(interface_name, ''))
+                    # http_client.post(interface_url, interface_payload)
                     interface_payload = self._fill_interface_template(self.bind, acl_name, HttpClient.PUT)
                     interface_url = self.url_dispatcher.PUT_INTERFACE_URL.format(node.get('name'),
                                                                           urllib.quote(interface_name, ''),
                                                                           self.bind)
                     http_client.put(interface_url, interface_payload)
-                except HttpClientException as e:
-                    logger.debug("PUT acl to interface failed, trying POST. Error: {}".format(e.message))
-                    interface_payload = self._fill_interface_template(self.bind, acl_name, HttpClient.POST)
-                    interface_url = self.url_dispatcher.POST_INTERFACE_URL.format(node.get('name'),
-                                                                   urllib.quote(interface_name, ''))
-                    http_client.post(interface_url, interface_payload)
 
     @upload_required
     def edit_acl(self):
