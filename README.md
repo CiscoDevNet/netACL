@@ -3,6 +3,9 @@
 
 OpenDaylight (ODL) is an open-source application development and delivery platform. Access Control Lists (ACL) are configuration statements deployed on routers intended to permit or deny traffic. They are typically used to filter traffic for security or administrative reasons. netACL is an application developed on top of ODL enabling the user to program ACLs on routers. 
 
+![](images/logoacl.png)
+Figure 0. netACL Logo
+
 ## Team:
 
 - Ilia Abashin
