@@ -1,5 +1,5 @@
 
-# OpenDaylight netACL App [![Creative Commons License](dcloud.png)](https://dcloud.cisco.com/)
+# OpenDaylight netACL App <a style="float:right " href="https://dcloud.cisco.com/"><img src="dcloud.png" alt="IMAGE ALT TEXT HERE" align="right"/></a>   
 
 
 ![](images/logoacl.png)
