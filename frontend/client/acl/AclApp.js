@@ -54,13 +54,13 @@
     odl.acl.Config = new nx.Config({
         topoDataUrl: topoUrl,
 //        topoDataUrl: "http://" + host + "/APP/webs/rest/topo",
-        updateInterfaceUrl: pathJoin(httpProtocol, [websPath, "rest/topo/node/{nodeid}/interface"]),
+        updateInterfaceUrl: location.protocol + '//' +pathJoin(null, [websPath, "rest/topo/node/{nodeid}/interface"]),
         socketUrl: pathJoin(wsProtocol, [websPath, '/sock/tc']),
 //        getAclUrl: './js/model/acl.json',
-        getAclUrl: pathJoin(httpProtocol, [websPath, 'rest/topo/node/{nodeName}/acl?if={intfName}']),
+        getAclUrl: location.protocol + '//' + pathJoin(null, [websPath, 'rest/topo/node/{nodeName}/acl?if={intfName}']),
         getAclTemplateUrl: './js/model/template.json',
-        modifyAclUrl: pathJoin(httpProtocol, [websPath, 'rest/topo/node/{nodeName}/acl']),
-        addAndUnbindAclUrl: pathJoin(httpProtocol, [websPath, 'rest/topo/acl'])
+        modifyAclUrl: location.protocol + '//' + pathJoin(null, [websPath, 'rest/topo/node/{nodeName}/acl']),
+        addAndUnbindAclUrl: location.protocol + '//' + pathJoin(null, [websPath, 'rest/topo/acl'])
     });
 
     (new App()).start();
