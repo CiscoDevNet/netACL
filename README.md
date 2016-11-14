@@ -30,7 +30,7 @@ OpenDaylight (ODL) is an open-source application development and delivery platfo
 
 ### Contact Email:
 
-<netacl-app@external.cisco.com>
+<app-netacl@external.cisco.com>
 
 ### Social Tags:
 
