@@ -40,7 +40,7 @@ Now you are done and you should have a session being started for you.
 # How do I configure my APP to talk to my dCloud ODL + topology?
 
 **Note:**
-The netACL app has been tested with Lithium SR3 and Beryllium SR1 and SR2
+The netACL app has been tested with Lithium, Beryllium, Boron, Carbon and Nitrogen releases of OpenDaylight.
 
 
 **No changes are needed to run this app towards the above-mentioned topology in dCloud.**
